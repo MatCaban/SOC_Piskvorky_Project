@@ -27,8 +27,13 @@ public class Game {
     public void validateMove(String input) {
         if (isInputNumerical(input) && isInputInRange(input) && isCellFree(input)) {
             makeMove(input);
-            switchPlayers();
+            switchPlayers(); //TODO: switch only if there is no winner in isThereWinner
         }
+    }
+
+    private void makeMove(String input) {
+        String player = this.playerXTurn ? "X" : "O";
+        this.gameField.updateField(player, input);
     }
 
     private void switchPlayers(){
@@ -81,8 +86,9 @@ public class Game {
         }
     }
 
-    private void makeMove(String input) {
-        String player = this.playerXTurn ? "X" : "O";
-        this.gameField.updateField(player, input);
-    }
+    //TODO:
+//    public void checkWinnerInRow();
+//    public void checkWinnerInColumn();
+//    public void checkWinnerInDiagonal();
+
 }

@@ -11,6 +11,7 @@ public class Main {
         while(!game.isThereWinner()){
             game.playRound();
             game.validateMove(scanner.nextLine());
+            isThereWinner = game.isThereWinner();
         }
 
 
