@@ -6,9 +6,11 @@ public class Main {
         Game game = new Game();
 
 
-        while(!game.isWinner()){
+        boolean isThereWinner = game.isThereWinner();
+
+        while(!game.isThereWinner()){
             game.playRound();
-            String userInput = scanner.nextLine();
+            game.validateMove(scanner.nextLine());
         }
 
 
