@@ -1,3 +1,8 @@
+/**
+ * The GameField class represents the playing field for a simple two-player game.
+ * It is internally represented as a 3x3 grid and facilitates game logic such as
+ * constructing the initial empty board and updating the field based on player actions.
+ */
 public class GameField {
     private String[][] playingField;
 
@@ -23,6 +28,13 @@ public class GameField {
         }
     }
 
+    /*
+     * Updates the game field with the player's symbol at the specified cell position.
+     *
+     * player The symbol representing the current player (e.g., "X" or "O").
+     * cellNumber A number between "1" and "9" indicating the position of the cell to update.
+     *                   The cells are numbered from 1 to 9 in a 3x3 grid format, starting from the top-left corner.
+     */
     public void updateField(String player, String cellNumber) {
         switch (cellNumber) {
             case "1" -> this.playingField[0][1] = player;
