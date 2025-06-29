@@ -6,12 +6,12 @@ public class Main {
         Game game = new Game();
 
 
-        boolean isThereWinner = game.isThereWinner();
 
-        while(!game.isThereWinner()){
+
+        while(game.shouldGameContinue()){
             game.playRound();
             game.validateMove(scanner.nextLine());
-            isThereWinner = game.isThereWinner();
+
         }
 
 

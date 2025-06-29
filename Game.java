@@ -4,15 +4,15 @@ public class Game {
     private final GameField gameField;
 
     public Game(){
-        this.playerXTurn = true;
-        this.playerOTurn = false;
+        this.playerXTurn = false;
+        this.playerOTurn = true;
         this.gameField = new GameField();
     }
 
 
 
     public void playRound() {
-        System.out.println(this.gameField.toString());
+        System.out.println(this.gameField);
 
         String player = this.playerXTurn ? "X" : "O";
         System.out.println("Player " + player + " enter (1-9)");
@@ -20,14 +20,18 @@ public class Game {
 
     }
 
-    public boolean isThereWinner(){
-        return false;
+    public boolean shouldGameContinue(){
+        if (checkWinnerInRow() || checkWinnerInColumn() || checkWinnerInDiagonal()){
+            System.out.println(this.gameField);
+            return false;
+        }
+        switchPlayers();
+        return true;
     }
 
     public void validateMove(String input) {
         if (isInputNumerical(input) && isInputInRange(input) && isCellFree(input)) {
             makeMove(input);
-            switchPlayers(); //TODO: switch only if there is no winner in isThereWinner
         }
     }
 
@@ -86,9 +90,73 @@ public class Game {
         }
     }
 
-    //TODO:
-//    public void checkWinnerInRow();
-//    public void checkWinnerInColumn();
-//    public void checkWinnerInDiagonal();
 
+    private boolean checkWinnerInRow(){
+        String firstRow = this.gameField.getPlayingField()[0][1] +
+                this.gameField.getPlayingField()[0][3] +
+                this.gameField.getPlayingField()[0][5];
+        String secondRow = this.gameField.getPlayingField()[1][1] +
+                this.gameField.getPlayingField()[1][3] +
+                this.gameField.getPlayingField()[1][5];
+        String thirdRow = this.gameField.getPlayingField()[2][1] +
+                this.gameField.getPlayingField()[2][3] +
+                this.gameField.getPlayingField()[2][5];
+
+        return isThereWinner(firstRow,secondRow,thirdRow);
+    }
+    private boolean checkWinnerInColumn() {
+        String firstColumn = this.gameField.getPlayingField()[0][1] +
+                this.gameField.getPlayingField()[1][1] +
+                this.gameField.getPlayingField()[2][1];
+        String secondColumn = this.gameField.getPlayingField()[0][3] +
+                this.gameField.getPlayingField()[1][3] +
+                this.gameField.getPlayingField()[2][3];
+        String thirdColumn = this.gameField.getPlayingField()[0][5] +
+                this.gameField.getPlayingField()[1][5] +
+                this.gameField.getPlayingField()[2][5];
+
+        return isThereWinner(firstColumn, secondColumn, thirdColumn);
+    }
+    private boolean checkWinnerInDiagonal(){
+        String firstDiagonal = this.gameField.getPlayingField()[0][1] +
+                this.gameField.getPlayingField()[1][3] +
+                this.gameField.getPlayingField()[2][5];
+        String secondDiagonal = this.gameField.getPlayingField()[0][5] +
+                this.gameField.getPlayingField()[1][3] +
+                this.gameField.getPlayingField()[2][1];
+
+        return isThereWinner(firstDiagonal, secondDiagonal);
+    }
+
+    private boolean isXWinner(String toCheck) {
+        return toCheck.equals("XXX");
+    }
+
+    private boolean isOWinner(String toCheck){
+        return toCheck.equals("OOO");
+    }
+
+    private boolean isThereWinner(String firstRowOrColumn, String secondRowOrColumn, String thirdRowOrColumn) {
+        if (isXWinner(firstRowOrColumn) || isXWinner(secondRowOrColumn) || isXWinner(thirdRowOrColumn)){
+            System.out.println("X wins!");
+            return true;
+        } else if (isOWinner(firstRowOrColumn) || isOWinner(secondRowOrColumn) || isOWinner(thirdRowOrColumn)) {
+            System.out.println("O wind!");
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private boolean isThereWinner(String firstDiagonal, String secondDiagonal) {
+        if (isXWinner(firstDiagonal) || isXWinner(secondDiagonal)){
+            System.out.println("X wins!");
+            return true;
+        } else if (isOWinner(firstDiagonal) || isOWinner(secondDiagonal)) {
+            System.out.println("O wind!");
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
