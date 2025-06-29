@@ -4,7 +4,7 @@
  * constructing the initial empty board and updating the field based on player actions.
  */
 public class GameField {
-    private String[][] playingField;
+    private final String[][] playingField;
 
     public GameField() {
         this.playingField = new String[3][7];

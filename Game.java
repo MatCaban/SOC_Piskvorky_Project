@@ -66,8 +66,8 @@ public class Game {
      * playerXTurn and playerOTurn flags accordingly.
      */
     private void switchPlayers(){
-        this.playerXTurn = this.playerXTurn ? false : true;
-        this.playerOTurn = this.playerOTurn ? false : true;
+        this.playerXTurn = !this.playerXTurn;
+        this.playerOTurn = !this.playerOTurn;
     }
 
     /*
