@@ -33,6 +33,9 @@ public class Game {
         if (checkWinnerInRow() || checkWinnerInColumn() || checkWinnerInDiagonal()){
             System.out.println(this.gameField);
             return false;
+        } else if (isGameFieldFull()) {
+            System.out.println("It's draw!");
+            return false;
         }
         switchPlayers();
         return true;
@@ -123,6 +126,17 @@ public class Game {
         }
     }
 
+    private boolean isGameFieldFull() {
+        for (String[] row : this.gameField.getPlayingField()) {
+            for (String cell : row) {
+                if (cell.equals("_")) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     /*
      * Checks whether there is a winner in any of the rows of the game field.
@@ -131,15 +145,21 @@ public class Game {
      * of the rows contain a winning pattern using the isThereWinner method.
      */
     private boolean checkWinnerInRow(){
-        String firstRow = this.gameField.getPlayingField()[0][1] +
-                this.gameField.getPlayingField()[0][3] +
-                this.gameField.getPlayingField()[0][5];
-        String secondRow = this.gameField.getPlayingField()[1][1] +
-                this.gameField.getPlayingField()[1][3] +
-                this.gameField.getPlayingField()[1][5];
-        String thirdRow = this.gameField.getPlayingField()[2][1] +
-                this.gameField.getPlayingField()[2][3] +
-                this.gameField.getPlayingField()[2][5];
+        String firstRow = "";
+        String secondRow = "";
+        String thirdRow = "";
+
+        for (int i = 0; i < this.gameField.getPlayingField().length; i++) {
+            for (int j = 1; j < this.gameField.getPlayingField()[i].length; j += 2){
+                if (i == 0) {
+                    firstRow += this.gameField.getPlayingField()[i][j];
+                } else if (i == 1) {
+                    secondRow += this.gameField.getPlayingField()[i][j];
+                } else {
+                    thirdRow += this.gameField.getPlayingField()[i][j];
+                }
+            }
+        }
 
         return isThereWinner(firstRow,secondRow,thirdRow);
     }
@@ -150,15 +170,21 @@ public class Game {
      * a winning combination for 'X' or 'O'.
      */
     private boolean checkWinnerInColumn() {
-        String firstColumn = this.gameField.getPlayingField()[0][1] +
-                this.gameField.getPlayingField()[1][1] +
-                this.gameField.getPlayingField()[2][1];
-        String secondColumn = this.gameField.getPlayingField()[0][3] +
-                this.gameField.getPlayingField()[1][3] +
-                this.gameField.getPlayingField()[2][3];
-        String thirdColumn = this.gameField.getPlayingField()[0][5] +
-                this.gameField.getPlayingField()[1][5] +
-                this.gameField.getPlayingField()[2][5];
+        String firstColumn = "";
+        String secondColumn = "";
+        String thirdColumn = "";
+
+        for (int i = 0; i < this.gameField.getPlayingField().length; i++) {
+            for (int j = 1; j < this.gameField.getPlayingField()[i].length; j += 2){
+                if (j == 1) {
+                    firstColumn += this.gameField.getPlayingField()[i][j];
+                } else if (j == 3) {
+                    secondColumn += this.gameField.getPlayingField()[i][j];
+                } else {
+                    thirdColumn += this.gameField.getPlayingField()[i][j];
+                }
+            }
+        }
 
         return isThereWinner(firstColumn, secondColumn, thirdColumn);
     }
