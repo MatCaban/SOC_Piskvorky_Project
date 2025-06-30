@@ -8,7 +8,7 @@ public class Game {
     private final GameField gameField;
 
     public Game(){
-        this.currentPlayer = 'O';
+        this.currentPlayer = 'X';
         this.gameField = new GameField();
     }
 
@@ -35,7 +35,6 @@ public class Game {
             System.out.println("It's draw!");
             return false;
         }
-        switchPlayers();
         return true;
     }
 
@@ -54,6 +53,7 @@ public class Game {
      */
     public void finishMove(String input) {
         this.gameField.updateField(String.valueOf(this.currentPlayer), input);
+        switchPlayers();
     }
 
     /*
