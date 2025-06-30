@@ -9,8 +9,13 @@ public class Main {
 
 
         while(game.shouldGameContinue()){
-            game.playRound();
-            game.validateMove(scanner.nextLine());
+            game.displayGameField();
+
+            String userInput = scanner.nextLine();
+
+            if (game.validateMove(userInput)) {
+                game.finishMove(userInput);
+            }
 
         }
 

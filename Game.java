@@ -6,21 +6,20 @@
 public class Game {
     private boolean playerXTurn;
     private boolean playerOTurn;
+    private char currentPlayer;
     private final GameField gameField;
 
     public Game(){
-        this.playerXTurn = false;
-        this.playerOTurn = true;
+        this.currentPlayer = 'O';
         this.gameField = new GameField();
     }
 
 
 
-    public void playRound() {
+    public void displayGameField() {
         System.out.println(this.gameField);
 
-        String player = this.playerXTurn ? "X" : "O";
-        System.out.println("Player " + player + " enter (1-9)");
+        System.out.println("Player " + this.currentPlayer + " enter (1-9)");
 
 
     }
@@ -44,19 +43,16 @@ public class Game {
      * The input is first checked to ensure it is numerical, within the expected range, and that the
      * targeted cell is not already occupied. If all validations pass, the move is executed.
      */
-    public void validateMove(String input) {
-        if (isInputNumerical(input) && isInputInRange(input) && isCellFree(input)) {
-            makeMove(input);
-        }
+    public boolean validateMove(String input) {
+        return (isInputNumerical(input) && isInputInRange(input) && isCellFree(input));
     }
 
     /*
      * Makes a move by updating the game field based on the provided input
      * and the current player's turn.
      */
-    private void makeMove(String input) {
-        String player = this.playerXTurn ? "X" : "O";
-        this.gameField.updateField(player, input);
+    public void finishMove(String input) {
+        this.gameField.updateField(String.valueOf(this.currentPlayer), input);
     }
 
     /*
@@ -66,8 +62,7 @@ public class Game {
      * playerXTurn and playerOTurn flags accordingly.
      */
     private void switchPlayers(){
-        this.playerXTurn = !this.playerXTurn;
-        this.playerOTurn = !this.playerOTurn;
+        this.currentPlayer = this.currentPlayer == 'X' ? 'O' : 'X';
     }
 
     /*
