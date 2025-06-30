@@ -4,8 +4,6 @@
  * move validation, and determines the game outcome based on the board state.
  */
 public class Game {
-    private boolean playerXTurn;
-    private boolean playerOTurn;
     private char currentPlayer;
     private final GameField gameField;
 
@@ -46,7 +44,7 @@ public class Game {
      * The input is first checked to ensure it is numerical, within the expected range, and that the
      * targeted cell is not already occupied. If all validations pass, the move is executed.
      */
-    public boolean validateMove(String input) {
+    public boolean isUserMoveValid(String input) {
         return (isInputNumerical(input) && isInputInRange(input) && isCellFree(input));
     }
 
@@ -126,6 +124,11 @@ public class Game {
         }
     }
 
+    /*
+     * Determines if the game field is completely filled with player symbols.
+     * The method iterates through each cell of the playing field and checks for any empty spaces ("_").
+     * If an empty cell is found, it indicates the field is not yet full.
+     */
     private boolean isGameFieldFull() {
         for (String[] row : this.gameField.getPlayingField()) {
             for (String cell : row) {
@@ -145,23 +148,23 @@ public class Game {
      * of the rows contain a winning pattern using the isThereWinner method.
      */
     private boolean checkWinnerInRow(){
-        String firstRow = "";
-        String secondRow = "";
-        String thirdRow = "";
+        StringBuilder firstRow = new StringBuilder();
+        StringBuilder secondRow = new StringBuilder();
+        StringBuilder thirdRow = new StringBuilder();
 
         for (int i = 0; i < this.gameField.getPlayingField().length; i++) {
             for (int j = 1; j < this.gameField.getPlayingField()[i].length; j += 2){
                 if (i == 0) {
-                    firstRow += this.gameField.getPlayingField()[i][j];
+                    firstRow.append(this.gameField.getPlayingField()[i][j]);
                 } else if (i == 1) {
-                    secondRow += this.gameField.getPlayingField()[i][j];
+                    secondRow.append(this.gameField.getPlayingField()[i][j]);
                 } else {
-                    thirdRow += this.gameField.getPlayingField()[i][j];
+                    thirdRow.append(this.gameField.getPlayingField()[i][j]);
                 }
             }
         }
 
-        return isThereWinner(firstRow,secondRow,thirdRow);
+        return isThereWinner(firstRow.toString(),secondRow.toString(),thirdRow.toString());
     }
     /*
      * Checks if there is a winner in any of the three columns of the game field.
@@ -170,23 +173,23 @@ public class Game {
      * a winning combination for 'X' or 'O'.
      */
     private boolean checkWinnerInColumn() {
-        String firstColumn = "";
-        String secondColumn = "";
-        String thirdColumn = "";
+        StringBuilder firstColumn = new StringBuilder();
+        StringBuilder secondColumn = new StringBuilder();
+        StringBuilder thirdColumn = new StringBuilder();
 
         for (int i = 0; i < this.gameField.getPlayingField().length; i++) {
             for (int j = 1; j < this.gameField.getPlayingField()[i].length; j += 2){
                 if (j == 1) {
-                    firstColumn += this.gameField.getPlayingField()[i][j];
+                    firstColumn.append(this.gameField.getPlayingField()[i][j]);
                 } else if (j == 3) {
-                    secondColumn += this.gameField.getPlayingField()[i][j];
+                    secondColumn.append(this.gameField.getPlayingField()[i][j]);
                 } else {
-                    thirdColumn += this.gameField.getPlayingField()[i][j];
+                    thirdColumn.append(this.gameField.getPlayingField()[i][j]);
                 }
             }
         }
 
-        return isThereWinner(firstColumn, secondColumn, thirdColumn);
+        return isThereWinner(firstColumn.toString(), secondColumn.toString(), thirdColumn.toString());
     }
     /*
      * Checks for a winner in the diagonals of the game field. This method evaluates

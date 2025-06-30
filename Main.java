@@ -13,7 +13,7 @@ public class Main {
 
             String userInput = scanner.nextLine();
 
-            if (game.validateMove(userInput)) {
+            if (game.isUserMoveValid(userInput)) {
                 game.finishMove(userInput);
             }
 
